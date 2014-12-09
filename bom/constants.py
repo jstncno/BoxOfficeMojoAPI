@@ -1,4 +1,4 @@
-#!/usr/bin python
+#!/usr/bin/python
 
 BASE_URL = 'http://boxofficemojo.com'
 WEEKEND_CHART = 'weekend/chart'
