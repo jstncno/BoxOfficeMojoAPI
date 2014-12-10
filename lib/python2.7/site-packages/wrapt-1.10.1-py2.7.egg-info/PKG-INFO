@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: wrapt
+Version: 1.10.1
+Summary: Module for decorators, wrappers and monkey patching.
+Home-page: https://github.com/GrahamDumpleton/wrapt
+Author: Graham Dumpleton
+Author-email: Graham.Dumpleton@gmail.com
+License: BSD
+Description: UNKNOWN
+Platform: UNKNOWN

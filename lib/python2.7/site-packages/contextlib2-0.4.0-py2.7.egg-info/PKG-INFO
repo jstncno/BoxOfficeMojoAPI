@@ -1,0 +1,13 @@
+Metadata-Version: 1.0
+Name: contextlib2
+Version: 0.4.0
+Summary: Backports and enhancements for the contextlib module
+Home-page: http://contextlib2.readthedocs.org
+Author: Nick Coghlan
+Author-email: ncoghlan@gmail.com
+License: PSF License
+Description: contextlib2 is a backport of the standard library's contextlib module to earlier Python versions.
+        
+        It also serves as a real world proving ground for possible future enhancements to the standard library version.
+        
+Platform: UNKNOWN
