@@ -24,6 +24,7 @@ soup = BeautifulSoup(response)
 table = soup.findChildren('table')[4]
 rows = soup.findChildren('tr')[6:-2]
 #name = table.findChildren('td')[2]
+print rows[0]
 print rows[len(rows)-1]
 
 
