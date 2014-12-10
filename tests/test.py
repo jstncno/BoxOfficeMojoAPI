@@ -23,15 +23,14 @@ with vcr.use_cassette('fixtures/vcr_cassettes/weekend_chart.yaml'):
 soup = BeautifulSoup(response)
 table = soup.findChildren('table')[4]
 rows = soup.findChildren('tr')[6:-2]
-#name = table.findChildren('td')[2]
-print rows[0]
-print rows[len(rows)-1]
+name = rows[0].findChildren('td')[2]
 
 
-#def get_soup(page=WEEKEND_CHART):
-#	content = requests.get('%s/%s' % (BASE_URL, page)).text
-#	print BeautifulSoup(content)
+def get_movie_names():
+    for i in range(len(rows)):
+        yield rows[i].findChildren('td')[2]
 
 
-#if __name__ == '__main__':
-#	get_soup()
+
+if __name__ == '__main__':
+    movies = get_movie_names()
