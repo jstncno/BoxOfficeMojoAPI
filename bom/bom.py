@@ -16,6 +16,18 @@ def get_soup(page=WEEKEND_CHART):
 	content = requests.get('%s/%s' % (BASE_URL, page)).text
 	print BeautifulSoup(content)
 
+class BOM(object):
+	"""
+	The class that parses the BoxOfficeMojo page, and builds up all the movies
+	"""
+	def get_movies(self, chart=WEEKEND_CHART):
+		"""
+		Yields a list of box office movies from chart of BoxOfficeMojo
+		"""
+		print chart
+
+
+
 
 if __name__ == '__main__':
 	get_soup()
