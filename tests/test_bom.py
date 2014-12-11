@@ -27,8 +27,14 @@ class TestBOM(unittest.TestCase):
         """
         Tests if response is in fact the weekend chart
         """
-        self.bom.get_movies()
-        assert True == True
+        movies = self.bom.get_movies()
+        movie = movies.next()
+        assert type(movie.this_week_rank) == int
+        assert type(movie.last_week_rank) == int
+        assert type(movie.title) == str
+        assert type(movie.studio) == str
+        assert type(movie.gross_str) == str
+        assert type(movie.gross_int) == int
 
 
 if __name__ == '__main__':
