@@ -10,14 +10,16 @@ License: MIT
 """
 import requests
 from bs4 import BeautifulSoup
-from .constants import BASE_URL, WEEKEND_CHART
+#from .constants import BASE_URL, WEEKEND_CHART
+from bom import constants
+from test_utils import FIXTURES_DIR
 
 import vcr
 import urllib2
 
-with vcr.use_cassette('fixtures/vcr_cassettes/weekend_chart.yaml'):
+with vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml'):
     #response = str(requests.get('%s/%s' % (BASE_URL, WEEKEND_CHART)).text)
-    response = urllib2.urlopen('%s/%s' % (BASE_URL, WEEKEND_CHART)).read()
+    response = urllib2.urlopen('%s/%s' % (constants.BASE_URL, constants.WEEKEND_CHART)).read()
     assert 'Weekend Box Office' in response
 
 soup = BeautifulSoup(response)
