@@ -10,7 +10,7 @@ License: MIT
 """
 import requests
 from bs4 import BeautifulSoup
-from constants import BASE_URL, WEEKEND_CHART
+from .constants import BASE_URL, WEEKEND_CHART
 
 def get_soup(page=WEEKEND_CHART):
 	content = requests.get('%s/%s' % (BASE_URL, page)).text

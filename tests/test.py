@@ -10,7 +10,7 @@ License: MIT
 """
 import requests
 from bs4 import BeautifulSoup
-from constants import BASE_URL, WEEKEND_CHART
+from .constants import BASE_URL, WEEKEND_CHART
 
 import vcr
 import urllib2
