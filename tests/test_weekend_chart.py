@@ -30,23 +30,3 @@ class TestWeekendChart(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-'''
-with vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml'):
-    #assert 'Weekend Box Office' in response
-
-soup = BeautifulSoup(response)
-table = soup.findChildren('table')[4]
-rows = soup.findChildren('tr')[6:-2]
-name = rows[0].findChildren('td')[2]
-
-print name
-
-def get_movie_names():
-    for i in range(len(rows)):
-        yield rows[i].findChildren('td')[2]
-
-if __name__ == '__main__':
-    movies = get_movie_names()
-'''
