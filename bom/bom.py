@@ -23,17 +23,24 @@ class BOM(object):
 	"""
 	The class that parses the BoxOfficeMojo page, and builds up all the movies
 	"""
+
 	def get_movies(self, chart=WEEKEND_CHART, limit=10):
 		"""
 		Yields a list of box office movies from chart of BoxOfficeMojo
+
+		'limit' is the max number of movies to return.
+		Default is 10, cannot be more than 25.
 		"""
+		#
+		if limit <= 0 or limit > 25:
+			limit = 25
+
 		movies_found = 0
 
 		#while movies_found < limit:
 		soup = get_soup(chart)
 		table = soup.findChildren('table')[4]
 		movies = soup.findChildren('tr')[6:-2]
-		movie = movies[76].findChildren('td')[2].string
 		for m in movies:
 			attrs = m.findChildren('td')
 			tw = int(attrs[0].string)
