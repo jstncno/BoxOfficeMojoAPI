@@ -24,7 +24,7 @@ class BOM(object):
 		"""
 		Yields a list of box office movies from chart of BoxOfficeMojo
 		"""
-		print chart
+		reponse = requests.get('%s/%s' % (BASE_URL, chart)).text
 
 
 
