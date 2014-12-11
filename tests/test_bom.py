@@ -34,7 +34,7 @@ class TestBOM(unittest.TestCase):
         assert type(movie.title) == str
         assert type(movie.studio) == str
         assert type(movie.gross_str) == str
-        assert ("$", "¥") in movie.gross_str
+        assert "$" in movie.gross_str
         assert type(movie.gross_int) == int
 
 
