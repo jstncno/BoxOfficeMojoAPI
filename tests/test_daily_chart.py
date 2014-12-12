@@ -14,13 +14,13 @@ import unittest
 import vcr
 
 from bs4 import BeautifulSoup
-from bom import BOM, BASE_URL, WEEKEND_CHART
+from bom import BOM
 from test_utils import FIXTURES_DIR
 
 
 class TestDailyChart(unittest.TestCase):
 
-    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml')
+    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_chart.yaml')
     def setUp(self):
         self.bom = BOM()
         self.movies = self.bom.daily_chart()
@@ -36,7 +36,6 @@ class TestDailyChart(unittest.TestCase):
         assert type(self.test_movie.gross_str) == str
         assert "$" in self.test_movie.gross_str
         assert type(self.test_movie.gross_int) == int
-
         
     '''
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_trend.yaml')

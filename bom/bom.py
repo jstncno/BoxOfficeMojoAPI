@@ -29,7 +29,8 @@ class BOM(object):
         """
         Returns the id from movie_id_link
         """
-        return re.sub('\/movies\/\?id\=', '', movie_id_link)
+        #return re.sub('\/movies\/\?id\=', '', movie_id_link)
+        return movie_id_link.split('id=')[1]
 
 
     def weekend_chart(self, limit=10):
@@ -77,8 +78,26 @@ class BOM(object):
         movies_found = 0
 
         soup = get_soup(DAILY_CHART)
-        movies = soup.findChildren('table')
+        movies = soup.findChildren('tr')[16:-2]
 
+        for m in movies:
+            attrs = m.findChildren('td')
+            try:
+                rank = int(attrs[0].string)
+            except:
+                rank = 0
+            title = str(attrs[1].b.a.string)
+            movie_id = self._get_movie_id(str(attrs[1].b.a['href']))
+            studio = str(attrs[1].small.a.string)
+            gross_str = str(attrs[2].contents[0])
+            gross_int = int(gross_str[1:].replace(',', ''))
+
+            movie = Movie(movie_id, rank, title, studio, gross_str, gross_int)
+            yield movie
+            movies_found += 1
+
+            if movies_found >= limit:
+                return
 
 
 class Movie(object):
