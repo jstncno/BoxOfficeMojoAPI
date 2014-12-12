@@ -105,9 +105,10 @@ class Movie(object):
     Movie class that represents a movie on BoxOfficeMojo
     """
 
-    def _get_movie_soup(self, page='weekend'):
+    def _get_movie_soup(self, page='weekend', view=''):
         params = {
             'page':page,
+            'view':view,
             'id':self.movie_id
         }
         encoded_params = urllib.urlencode(params)
@@ -152,7 +153,31 @@ class Movie(object):
         return zip(index, weekend, rank, gross)
 
     def daily_trend(self):
-        soup = self._get_movie_soup('daily')
+        soup = self._get_movie_soup(page='daily',view='chart')
+        center = soup.findChildren('center')[1]
+        table = center.findChildren('table')[0]
+        rows = table.findChildren('tr')[1:]
+
+        day = []
+        rank = []
+        gross = []
+        index = []
+        for row in rows:
+            td = row.findChildren('td')
+            try:
+                d = str(td[1].string)
+                r = str(td[2].string)
+                g = str(td[3].string)
+                i = str(td[9].string)
+            except:
+                pass
+            finally:
+                day.append(d)
+                rank.append(r)
+                gross.append(g)
+                index.append(i)
+
+        return zip(index, day, rank, gross)
 
 
 if __name__ == '__main__':
