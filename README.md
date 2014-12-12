@@ -10,5 +10,5 @@ from bom import BOM, WEEKEND_CHART
 bom = BOM()
 
 for movie in bom.get_movies(chart=WEEKEND_CHART, limit=10):
-  print movie.title
+  print (movie.rank, movie.title, movie.gross_str)
 ```
