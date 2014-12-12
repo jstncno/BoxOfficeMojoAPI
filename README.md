@@ -32,4 +32,4 @@ To run individual tests:
 $ python -m unittest tests.<module name>
 ```
 
-The first time you run these tests, the test suite will create a [VCR.py](https://github.com/kevin1024/vcrpy) cassette into `tests/fixtures/vcr_cassettes`, which records and saves any HTTP requests made by the unittests. Any subsequent test runs will use the cassette instead of make another HTTP request.
+The first time you run these tests, the test suite will create a [VCR.py](https://github.com/kevin1024/vcrpy) cassette into `tests/fixtures/vcr_cassettes`, which records and saves any HTTP requests stubs made by the unittests. Any subsequent test runs will use the cassette instead of make another HTTP request.
