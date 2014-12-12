@@ -10,7 +10,7 @@ from bom import BOM
 bom = BOM()
 
 for movie in bom.weekend_chart(limit=10):
-  print (movie.rank, movie.title, movie.gross_str)
+    print (movie.rank, movie.title, movie.gross_str)
 ```
 
 #Unit Tests
