@@ -8,6 +8,7 @@ Author: Justin Cano
 Email: jcano001@ucr.edu
 License: MIT
 """
+import urllib
 import urllib2
 import unittest
 import vcr
@@ -19,44 +20,33 @@ from test_utils import FIXTURES_DIR
 
 class TestBOM(unittest.TestCase):
 
+    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/bom.yaml')
     def setUp(self):
         self.bom = BOM()
+        movies = self.bom.get_movies()
+        self.test_movie = movies.next() # get the first movie for testing
 
-    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/bom.yml')
     def test_bom(self):
         """
         Tests if BOM holds appropriate Movie objects
         """
-        movies = self.bom.get_movies()
-        movie = movies.next()
-        assert type(movie.rank) == int
-        assert type(movie.title) == str
-        assert type(movie.studio) == str
-        assert type(movie.gross_str) == str
-        assert "$" in movie.gross_str
-        assert type(movie.gross_int) == int
+        assert type(self.test_movie.rank) == int
+        assert type(self.test_movie.title) == str
+        assert type(self.test_movie.studio) == str
+        assert type(self.test_movie.gross_str) == str
+        assert "$" in self.test_movie.gross_str
+        assert type(self.test_movie.gross_int) == int
+
+    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_trend.yaml')
+    def test_weekend_trend(self):
+        """
+        Tests for the weekend trend of a movie
+        """
+        trend_data = self.test_movie.weekend_trend()
+        assert type(trend_data) == list
+
+
 
 
 if __name__ == '__main__':
     unittest.main()
-
-
-'''
-with vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml'):
-    response = urllib2.urlopen('%s/%s' % (BASE_URL, WEEKEND_CHART)).read()
-    assert 'Weekend Box Office' in response
-
-soup = BeautifulSoup(response)
-table = soup.findChildren('table')[4]
-rows = soup.findChildren('tr')[6:-2]
-name = rows[0].findChildren('td')[2]
-
-print name
-
-def get_movie_names():
-    for i in range(len(rows)):
-        yield rows[i].findChildren('td')[2]
-
-if __name__ == '__main__':
-    movies = get_movie_names()
-'''
