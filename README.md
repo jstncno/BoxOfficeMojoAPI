@@ -5,11 +5,11 @@ Unofficial Python API for [Box Office Mojo](http://boxofficemojo.com/).
 
 #Usage
 ```python
-from bom import BOM, WEEKEND_CHART
+from bom import BOM
 
 bom = BOM()
 
-for movie in bom.get_movies(chart=WEEKEND_CHART, limit=10):
+for movie in bom.weekend_chart(limit=10):
   print (movie.rank, movie.title, movie.gross_str)
 ```
 
