@@ -38,7 +38,7 @@ class TestDailyChart(unittest.TestCase):
         assert type(self.test_movie.gross_int) == int
         
     '''
-    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_trend.yaml')
+    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_trend.yaml')
     def test_daily_trend(self):
         """
         Tests for the weekend trend of a movie

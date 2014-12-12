@@ -67,7 +67,7 @@ class BOM(object):
 
     def daily_chart(self, limit=10):
         """
-        Yields a list of box office movies from the weekend chart of BoxOfficeMojo
+        Yields a list of box office movies from the daily chart of BoxOfficeMojo
 
         'limit' is the max number of movies to return.
         Default is 10, cannot be more than 25.
@@ -104,6 +104,16 @@ class Movie(object):
     """
     Movie class that represents a movie on BoxOfficeMojo
     """
+
+    def _get_movie_soup(self, page='weekend'):
+        params = {
+            'page':page,
+            'id':self.movie_id
+        }
+        encoded_params = urllib.urlencode(params)
+        page = '/movies/?' + encoded_params
+        return get_soup(page)
+
     def __init__(self, movie_id, rank, title, studio, gross_str, gross_int):
         self.movie_id = movie_id # the movie's ID on BoxOfficeMojo.com
         self.rank = rank # this week's rank
@@ -118,13 +128,7 @@ class Movie(object):
         Return value:
         [(week_number, date, rank, weekend_gross),]
         """
-        params = {
-            'page':'weekend',
-            'id':self.movie_id
-        }
-        encoded_params = urllib.urlencode(params)
-        page = '/movies/?' + encoded_params
-        soup = get_soup(page)
+        soup = self._get_movie_soup('weekend')
         table = soup.findChildren('table')[6]
 
         # sometimes the page will have an extra IMDb advertisement
@@ -147,6 +151,8 @@ class Movie(object):
 
         return zip(index, weekend, rank, gross)
 
+    def daily_trend(self):
+        soup = self._get_movie_soup('daily')
 
 
 if __name__ == '__main__':
