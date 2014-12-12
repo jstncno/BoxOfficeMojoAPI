@@ -30,8 +30,10 @@ The movie's current rank
 The title of the movie
 ###attribute Movie.studio
 The movie's producing studio
-###attribute Movie.studio
+###attribute Movie.gross
 The movie's gross income
+###property Movie.gross_val
+The movie's gross income, represented as an integer
 ###Movie.weekend_trend()
 Get the movie's weekend trend as a list of tuples
 ###Movie.daily_trend()
