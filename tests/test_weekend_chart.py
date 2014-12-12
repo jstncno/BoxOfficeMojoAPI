@@ -2,7 +2,7 @@
 
 """
 Box Office Mojo API
-Unofficial Python API for Box Office Mojo API.
+Unofficial Python API for Box Office Mojo.
 
 Author: Justin Cano
 Email: jcano001@ucr.edu
