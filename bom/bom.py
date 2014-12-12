@@ -184,6 +184,10 @@ class Movie(object):
 
         return zip(index, day, rank, gross)
 
+    @property
+    def gross_val(self):
+        return int(self.gross[1:].replace(',', ''))
+
 
 if __name__ == '__main__':
     get_soup()
