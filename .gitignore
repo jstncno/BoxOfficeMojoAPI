@@ -1,5 +1,6 @@
 .env
 bin/
+lib/
 *.pyc
 temp.py
 tests/fixtures/
