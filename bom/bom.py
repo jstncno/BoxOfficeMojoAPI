@@ -44,9 +44,10 @@ class BOM(object):
 
         movies_found = 0
 
-        #while movies_found < limit:
         soup = get_soup(WEEKEND_CHART)
-        movies = soup.findChildren('tr')[6:-2]
+        table = soup.findChildren('table')[4]
+        movies = table.findChildren('tr')[1:-1]
+        
         for m in movies:
             attrs = m.findChildren('td')
             rank = int(attrs[0].string)
