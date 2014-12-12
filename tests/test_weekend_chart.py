@@ -18,7 +18,7 @@ from bom import BOM, BASE_URL, WEEKEND_CHART
 from test_utils import FIXTURES_DIR
 
 
-class TestBOM(unittest.TestCase):
+class TestWeekendChart(unittest.TestCase):
 
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml')
     def setUp(self):
@@ -26,7 +26,7 @@ class TestBOM(unittest.TestCase):
         self.movies = self.bom.weekend_chart()
         self.test_movie = self.movies.next() # get the first movie for testing
 
-    def test_bom(self):
+    def test_weekend_chart(self):
         """
         Tests if BOM holds appropriate Movie objects
         """
