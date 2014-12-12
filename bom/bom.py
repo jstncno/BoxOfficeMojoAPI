@@ -55,10 +55,10 @@ class BOM(object):
             title = str(attrs[2].string)
             movie_id = self._get_movie_id(str(attrs[2].a['href']))
             studio = str(attrs[3].string)
-            gross_str = str(attrs[4].string)
-            gross_int = int(gross_str[1:].replace(',', ''))
+            gross = str(attrs[4].string)
+            #gross_int = int(gross_str[1:].replace(',', ''))
 
-            movie = Movie(movie_id, rank, title, studio, gross_str, gross_int)
+            movie = Movie(movie_id, rank, title, studio, gross)
             yield movie
             movies_found += 1
 
@@ -89,10 +89,10 @@ class BOM(object):
             title = str(attrs[1].b.a.string)
             movie_id = self._get_movie_id(str(attrs[1].b.a['href']))
             studio = str(attrs[1].small.a.string)
-            gross_str = str(attrs[2].contents[0])
-            gross_int = int(gross_str[1:].replace(',', ''))
+            gross = str(attrs[2].contents[0])
+            #gross_int = int(gross_str[1:].replace(',', ''))
 
-            movie = Movie(movie_id, rank, title, studio, gross_str, gross_int)
+            movie = Movie(movie_id, rank, title, studio, gross)
             yield movie
             movies_found += 1
 
@@ -115,13 +115,13 @@ class Movie(object):
         page = '/movies/?' + encoded_params
         return get_soup(page)
 
-    def __init__(self, movie_id, rank, title, studio, gross_str, gross_int):
+    def __init__(self, movie_id, rank, title, studio, gross):
         self.movie_id = movie_id # the movie's ID on BoxOfficeMojo.com
         self.rank = rank # this week's rank
         self.title = title # the title of the movie
         self.studio = studio # the movie's producing studio
-        self.gross_str = gross_str # movie's gross income (str)
-        self.gross_int = gross_int # movie's gross income (int)
+        self.gross = gross # movie's gross income
+        #self.gross_int = gross_int # movie's gross income (int)
 
     def weekend_trend(self):
         """
