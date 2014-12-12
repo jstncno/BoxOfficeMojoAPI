@@ -39,7 +39,6 @@ class BOM(object):
 
 		#while movies_found < limit:
 		soup = get_soup(chart)
-		table = soup.findChildren('table')[4]
 		movies = soup.findChildren('tr')[6:-2]
 		for m in movies:
 			attrs = m.findChildren('td')
