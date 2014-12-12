@@ -44,13 +44,12 @@ class BOM(object):
 		for m in movies:
 			attrs = m.findChildren('td')
 			tw = int(attrs[0].string)
-			lw = int(attrs[1].string)
 			title = str(attrs[2].string)
 			studio = str(attrs[3].string)
 			gross_str = str(attrs[4].string)
 			gross_int = int(gross_str[1:].replace(',',''))
 
-			movie = Movie(tw, lw, title, studio, gross_str, gross_int)
+			movie = Movie(tw, title, studio, gross_str, gross_int)
 			yield movie
 			movies_found += 1
 
@@ -64,10 +63,8 @@ class Movie(object):
 	Movie class that represents a movie on BoxOfficeMojo
 	"""
 	pass
-	def __init__(self, this_week_rank, last_week_rank, title, studio,
-				 gross_str, gross_int):
+	def __init__(self, this_week_rank, title, studio, gross_str, gross_int):
 		self.this_week_rank = this_week_rank # this week's rank
-		self.last_week_rank = last_week_rank # last week's rank
 		self.title = title # the title of the movie
 		self.studio = studio # the movie's producing studio
 		self.gross_str = gross_str # movie's gross income (str)
