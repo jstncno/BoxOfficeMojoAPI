@@ -51,12 +51,11 @@ class BOM(object):
         
         for m in movies:
             attrs = m.findChildren('td')
-            rank = int(attrs[0].string)
+            rank = str(attrs[0].string)
             title = str(attrs[2].string)
             movie_id = self._get_movie_id(str(attrs[2].a['href']))
             studio = str(attrs[3].string)
             gross = str(attrs[4].string)
-            #gross_int = int(gross_str[1:].replace(',', ''))
 
             movie = Movie(movie_id, rank, title, studio, gross)
             yield movie
@@ -82,15 +81,11 @@ class BOM(object):
 
         for m in movies:
             attrs = m.findChildren('td')
-            try:
-                rank = int(attrs[0].string)
-            except:
-                rank = 0
+            rank = str(attrs[0].string)
             title = str(attrs[1].b.a.string)
             movie_id = self._get_movie_id(str(attrs[1].b.a['href']))
             studio = str(attrs[1].small.a.string)
             gross = str(attrs[2].contents[0])
-            #gross_int = int(gross_str[1:].replace(',', ''))
 
             movie = Movie(movie_id, rank, title, studio, gross)
             yield movie
@@ -121,7 +116,6 @@ class Movie(object):
         self.title = title # the title of the movie
         self.studio = studio # the movie's producing studio
         self.gross = gross # movie's gross income
-        #self.gross_int = gross_int # movie's gross income (int)
 
     def weekend_trend(self):
         """
@@ -148,7 +142,7 @@ class Movie(object):
             weekend.append(td[0].string.encode('raw_unicode_escape').replace('\x96', '-'))
             rank.append(str(td[1].string))
             gross.append(str(td[2].string))
-            index.append(int(td[8].string))
+            index.append(str(td[8].string))
 
         return zip(index, weekend, rank, gross)
 
