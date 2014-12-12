@@ -44,6 +44,10 @@ class TestBOM(unittest.TestCase):
         """
         trend_data = self.test_movie.weekend_trend()
         assert type(trend_data) == list
+        print trend_data
+        for data in trend_data:
+            assert type(data) == tuple
+
 
 
 

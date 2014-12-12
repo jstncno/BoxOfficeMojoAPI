@@ -80,8 +80,9 @@ class Movie(object):
     def weekend_trend(self):
         """
         Returns a list of tuples of the Movie's weekend trend data
+        Return value:
+        [(week_number, date, rank, weekend_gross),]
         """
-        trend_data = []
         params = {
             'page':'weekend',
             'id':self.movie_id
@@ -91,16 +92,20 @@ class Movie(object):
         soup = BeautifulSoup(urllib2.urlopen(url).read())
         table = soup.findChildren('table')[6]
         rows = table.findChildren('tr')[1:]
-
+        
+        weekend = []
+        rank = []
+        gross = []
+        index = []
         for row in rows:
-            weekend = [w.string.encode('raw_unicode_escape').replace('\x96', '-') for (i, w) in enumerate(row) if i==0]
-            rank = [str(r.string) for (i, r) in enumerate(row) if i==1]
-            gross = [str(g.string) for (i, g) in enumerate(row) if i==2]
-            index = [int(idx.string) for (i, idx) in enumerate(row) if i==8]
+            td = row.findChildren('td')
+            weekend.append(td[0].string.encode('raw_unicode_escape').replace('\x96', '-'))
+            rank.append(str(td[1].string))
+            gross.append(str(td[2].string))
+            index.append(int(td[8].string))
 
-            trend_data.append(zip(index, weekend, rank, gross))
+        return zip(index, weekend, rank, gross)
 
-        return trend_data
 
 
 if __name__ == '__main__':
