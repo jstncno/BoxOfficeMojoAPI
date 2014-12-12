@@ -31,7 +31,6 @@ class BOM(object):
 		'limit' is the max number of movies to return.
 		Default is 10, cannot be more than 25.
 		"""
-		#
 		if limit <= 0 or limit > 25:
 			limit = 25
 
