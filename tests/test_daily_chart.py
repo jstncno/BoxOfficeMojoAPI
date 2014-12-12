@@ -40,7 +40,7 @@ class TestDailyChart(unittest.TestCase):
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_trend.yaml')
     def test_daily_trend(self):
         """
-        Tests for the weekend trend of a movie
+        Tests for the daily trend of a movie
         """
         for movie in self.movies:
             trend_data = movie.daily_trend()
