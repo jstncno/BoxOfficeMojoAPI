@@ -32,7 +32,7 @@ class BOM(object):
         return re.sub('\/movies\/\?id\=', '', movie_id_link)
 
 
-    def get_movies(self, chart=WEEKEND_CHART, limit=10):
+    def weekend_chart(self, limit=10):
         """
         Yields a list of box office movies from chart of BoxOfficeMojo
 
@@ -45,7 +45,7 @@ class BOM(object):
         movies_found = 0
 
         #while movies_found < limit:
-        soup = get_soup(chart)
+        soup = get_soup(WEEKEND_CHART)
         movies = soup.findChildren('tr')[6:-2]
         for m in movies:
             attrs = m.findChildren('td')
@@ -62,6 +62,7 @@ class BOM(object):
 
             if movies_found >= limit:
                 return
+
 
 
 
@@ -96,7 +97,7 @@ class Movie(object):
         # skip to the next table if such element exists
         if 'imdb' in table.a['href']:
             table = soup.findChildren('table')[7]
-            
+
         rows = table.findChildren('tr')[1:]
         
         weekend = []
