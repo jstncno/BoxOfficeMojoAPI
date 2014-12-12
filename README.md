@@ -1,5 +1,6 @@
 BoxOfficeMojoAPI
 ================
+[![Build Status](https://travis-ci.org/hyperbit/BoxOfficeMojoAPI.svg?branch=master)]
 
 Unofficial Python API for [Box Office Mojo](http://boxofficemojo.com/).
 
