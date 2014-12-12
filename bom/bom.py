@@ -88,8 +88,8 @@ class Movie(object):
             'id':self.movie_id
         }
         encoded_params = urllib.urlencode(params)
-        url = BASE_URL + '/movies/?' + encoded_params
-        soup = BeautifulSoup(urllib2.urlopen(url).read())
+        page = '/movies/?' + encoded_params
+        soup = get_soup(page)
         table = soup.findChildren('table')[6]
         rows = table.findChildren('tr')[1:]
         
