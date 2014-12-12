@@ -91,10 +91,12 @@ class Movie(object):
         page = '/movies/?' + encoded_params
         soup = get_soup(page)
         table = soup.findChildren('table')[6]
+
         # sometimes the page will have an extra IMDb advertisement
         # skip to the next table if such element exists
         if 'imdb' in table.a['href']:
             table = soup.findChildren('table')[7]
+            
         rows = table.findChildren('tr')[1:]
         
         weekend = []
