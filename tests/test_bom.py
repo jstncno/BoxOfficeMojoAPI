@@ -25,7 +25,7 @@ class TestBOM(unittest.TestCase):
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/bom.yml')
     def test_bom(self):
         """
-        Tests if response is in fact the weekend chart
+        Tests if BOM holds appropriate Movie objects
         """
         movies = self.bom.get_movies()
         movie = movies.next()
