@@ -13,7 +13,7 @@ import urllib2
 import re
 #import requests
 from bs4 import BeautifulSoup
-from .constants import BASE_URL, WEEKEND_CHART
+from .constants import BASE_URL, WEEKEND_CHART, DAILY_CHART
 
 def get_soup(page=WEEKEND_CHART):
     #content = requests.get('%s/%s/' % (BASE_URL, page))
@@ -44,7 +44,6 @@ class BOM(object):
 
         movies_found = 0
 
-        #while movies_found < limit:
         soup = get_soup(WEEKEND_CHART)
         movies = soup.findChildren('tr')[6:-2]
         for m in movies:
@@ -63,6 +62,20 @@ class BOM(object):
             if movies_found >= limit:
                 return
 
+    def daily_chart(self, limit=10):
+        """
+        Yields a list of box office movies from the weekend chart of BoxOfficeMojo
+
+        'limit' is the max number of movies to return.
+        Default is 10, cannot be more than 25.
+        """
+        if limit <= 0 or limit > 25:
+            limit = 25
+
+        movies_found = 0
+
+        soup = get_soup(DAILY_CHART)
+        movies = soup.findChildren('table')
 
 
 
