@@ -13,6 +13,31 @@ for movie in bom.weekend_chart(limit=10):
     print (movie.rank, movie.title, movie.gross_str)
 ```
 
+#API
+##class BOM()
+Get list of movies from Box Office Mojo
+###BOM.weekend_chart(limit=10)
+Get movies from top box office charts from the past weekend.
+###BOM.daily_chart(limit=10)
+Get movies from top box office charts since the beginning of the week.
+##class Movie()
+Movie model for Box Office Mojo
+###attribute Movie.movie_id
+The movie's ID on Box Office Mojo
+###attribute Movie.rank
+The movie's current rank
+###attribute Movie.title
+The title of the movie
+###attribute Movie.studio
+The movie's producing studio
+###attribute Movie.studio
+The movie's gross income
+###Movie.weekend_trend()
+Get the movie's weekend trend as a list of tuples
+###Movie.daily_trend()
+Get the movie's daily trend as a list of tuples
+
+
 #Unit Tests
 To run the test suite, fork the project and set up the run script locally.
 
