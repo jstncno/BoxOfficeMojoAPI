@@ -29,8 +29,7 @@ class TestBOM(unittest.TestCase):
         """
         movies = self.bom.get_movies()
         movie = movies.next()
-        assert type(movie.this_week_rank) == int
-        assert type(movie.last_week_rank) == int
+        assert type(movie.rank) == int
         assert type(movie.title) == str
         assert type(movie.studio) == str
         assert type(movie.gross_str) == str
