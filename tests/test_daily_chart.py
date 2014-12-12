@@ -30,7 +30,7 @@ class TestDailyChart(unittest.TestCase):
         """
         Tests if BOM holds appropriate Movie objects
         """
-        assert type(self.test_movie.rank) == int
+        assert type(self.test_movie.rank) == str
         assert type(self.test_movie.title) == str
         assert type(self.test_movie.studio) == str
         assert type(self.test_movie.gross) == str
