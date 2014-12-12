@@ -153,6 +153,11 @@ class Movie(object):
         return zip(index, weekend, rank, gross)
 
     def daily_trend(self):
+        """
+        Returns a list of tuples of the Movie's daily trend data
+        Return value:
+        [(day_number, day, rank, gross),]
+        """
         soup = self._get_movie_soup(page='daily',view='chart')
         center = soup.findChildren('center')[1]
         table = center.findChildren('table')[0]
