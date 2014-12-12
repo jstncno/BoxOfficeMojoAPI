@@ -34,7 +34,7 @@ class BOM(object):
 
     def weekend_chart(self, limit=10):
         """
-        Yields a list of box office movies from chart of BoxOfficeMojo
+        Yields a list of box office movies from the weekend chart of BoxOfficeMojo
 
         'limit' is the max number of movies to return.
         Default is 10, cannot be more than 25.
