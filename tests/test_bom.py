@@ -23,8 +23,8 @@ class TestBOM(unittest.TestCase):
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/bom.yaml')
     def setUp(self):
         self.bom = BOM()
-        movies = self.bom.get_movies()
-        self.test_movie = movies.next() # get the first movie for testing
+        self.movies = self.bom.get_movies()
+        self.test_movie = self.movies.next() # get the first movie for testing
 
     def test_bom(self):
         """
@@ -37,6 +37,9 @@ class TestBOM(unittest.TestCase):
         assert "$" in self.test_movie.gross_str
         assert type(self.test_movie.gross_int) == int
 
+        for movie in self.movies:
+            assert len(movie.weekend_trend()) > 0
+
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_trend.yaml')
     def test_weekend_trend(self):
         """
@@ -46,6 +49,7 @@ class TestBOM(unittest.TestCase):
         assert type(trend_data) == list
         for data in trend_data:
             assert type(data) == tuple
+        assert len(trend_data) > 0
 
 
 
