@@ -17,7 +17,6 @@ from bs4 import BeautifulSoup
 from bom import BOM
 from test_utils import FIXTURES_DIR
 
-
 class TestDailyChart(unittest.TestCase):
 
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_chart.yaml')
@@ -35,6 +34,12 @@ class TestDailyChart(unittest.TestCase):
         assert type(self.test_movie.studio) == str
         assert type(self.test_movie.gross) == str
         assert "$" in self.test_movie.gross
+
+        temp_gross = self.test_movie.gross
+        self.test_movie.gross = '-'
+        assert type(self.test_movie.gross_val) == int
+        assert self.test_movie.gross_val == 0
+        self.test_movie.gross = temp_gross
         
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_trend.yaml')
     def test_daily_trend(self):

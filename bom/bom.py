@@ -190,8 +190,10 @@ class Movie(object):
 
     @property
     def gross_val(self):
-        return int(self.gross[1:].replace(',', ''))
-
+        try:
+            return int(self.gross[1:].replace(',', ''))
+        except ValueError: # gross may not be available at the moment
+            return 0
 
 if __name__ == '__main__':
     get_soup()
