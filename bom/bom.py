@@ -121,7 +121,7 @@ class Movie(object):
         return get_soup(page)
 
     def _get_domestic_total(self):
-        soup = self._get_movie_soup(page='',view='chart')
+        soup = self._get_movie_soup(page='',view='')
         print soup.prettify()
 
 
