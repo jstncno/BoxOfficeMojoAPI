@@ -79,13 +79,23 @@ class BOM(object):
         soup = get_soup(DAILY_CHART)
         movies = soup.findChildren('tr')[16:-2]
 
-        for m in movies:
+        s = soup.findChildren('b')
+        mvs = s[13:len(s)-3]
+
+        it = iter(mvs)
+
+        mvs = zip(it, it)
+
+        assert len(mvs) == len(movies)
+
+        for (i, m) in enumerate(movies):
             attrs = m.findChildren('td')
             rank = str(attrs[0].string)
-            title = str(attrs[1].b.a.string)
             movie_id = self._get_movie_id(str(attrs[1].b.a['href']))
             studio = str(attrs[1].small.a.string)
-            gross = str(attrs[2].contents[0])
+
+            title = str(mvs[i][0].next_element.string)
+            gross = str(mvs[i][1].next_element.string)
 
             movie = Movie(movie_id, rank, title, studio, gross)
             yield movie
