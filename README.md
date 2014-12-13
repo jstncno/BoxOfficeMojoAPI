@@ -33,6 +33,7 @@ The title of the movie
 The movie's producing studio
 ###attribute Movie.gross
 The movie's gross income
+Note: can be either weekend or daily gross, depending on which BOM method you called
 ###property Movie.gross_val
 The movie's gross income, represented as an integer
 ###Movie.weekend_trend()
