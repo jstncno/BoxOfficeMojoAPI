@@ -120,6 +120,11 @@ class Movie(object):
         page = '/movies/?' + encoded_params
         return get_soup(page)
 
+    def _get_domestic_total(self):
+        soup = self._get_movie_soup(page='',view='chart')
+        print soup.prettify()
+
+
     def __init__(self, movie_id, rank, title, studio, gross):
         self.movie_id = movie_id # the movie's ID on BoxOfficeMojo.com
         self.rank = rank # this week's rank
@@ -127,7 +132,7 @@ class Movie(object):
         self.studio = studio # the movie's producing studio
         self._gross = gross # movie's gross income (can be either be weekend or daily)
         #TODO: add gross_to_date method
-        #self.gross_to_date = _get_domestic_total(self.movie_id)
+        #self.gross_to_date = _get_domestic_total()
 
     def weekend_trend(self):
         """
