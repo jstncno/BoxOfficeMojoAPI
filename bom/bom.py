@@ -110,7 +110,7 @@ class Movie(object):
     Movie class that represents a movie on BoxOfficeMojo
     """
 
-    def _get_movie_soup(self, page='weekend', view=''):
+    def _get_movie_soup(self, page='', view=''):
         params = {
             'page':page,
             'view':view,
@@ -120,12 +120,19 @@ class Movie(object):
         page = '/movies/?' + encoded_params
         return get_soup(page)
 
+    def _get_domestic_total(self):
+        soup = self._get_movie_soup()
+        center = soup.findChildren('center')[0]
+        return str(center.findChildren('tr')[0].b.string)
+
+
     def __init__(self, movie_id, rank, title, studio, gross):
         self.movie_id = movie_id # the movie's ID on BoxOfficeMojo.com
         self.rank = rank # this week's rank
         self.title = title # the title of the movie
         self.studio = studio # the movie's producing studio
-        self.gross = gross # movie's gross income
+        self._gross = gross # movie's gross income (can be either be weekend or daily)
+        self.gross_to_date = self._get_domestic_total()
 
     def weekend_trend(self):
         """
@@ -191,7 +198,7 @@ class Movie(object):
     @property
     def gross_val(self):
         try:
-            return int(self.gross[1:].replace(',', ''))
+            return int(self._gross[1:].replace(',', ''))
         except ValueError: # gross may not be available at the moment
             return 0
 

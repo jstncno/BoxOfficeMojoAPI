@@ -31,8 +31,9 @@ The movie's current rank
 The title of the movie
 ###attribute Movie.studio
 The movie's producing studio
-###attribute Movie.gross
+###attribute Movie._gross
 The movie's gross income
+Note: can be either weekend or daily gross, depending on which BOM method you called
 ###property Movie.gross_val
 The movie's gross income, represented as an integer
 ###Movie.weekend_trend()
