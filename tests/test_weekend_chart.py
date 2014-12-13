@@ -33,8 +33,8 @@ class TestWeekendChart(unittest.TestCase):
         assert type(self.test_movie.rank) == str
         assert type(self.test_movie.title) == str
         assert type(self.test_movie.studio) == str
-        assert type(self.test_movie.gross) == str
-        assert "$" in self.test_movie.gross
+        assert type(self.test_movie._gross) == str
+        assert "$" in self.test_movie._gross
 
         
 

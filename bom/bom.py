@@ -125,7 +125,9 @@ class Movie(object):
         self.rank = rank # this week's rank
         self.title = title # the title of the movie
         self.studio = studio # the movie's producing studio
-        self.gross = gross # movie's gross income
+        self._gross = gross # movie's gross income (can be either be weekend or daily)
+        #TODO: add gross_to_date method
+        #self.gross_to_date = _get_domestic_total(self.movie_id)
 
     def weekend_trend(self):
         """
@@ -191,7 +193,7 @@ class Movie(object):
     @property
     def gross_val(self):
         try:
-            return int(self.gross[1:].replace(',', ''))
+            return int(self._gross[1:].replace(',', ''))
         except ValueError: # gross may not be available at the moment
             return 0
 
