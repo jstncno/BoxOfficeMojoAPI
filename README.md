@@ -20,7 +20,7 @@ Get list of movies from Box Office Mojo
 ###BOM.weekend_chart(limit=10)
 Get movies from top box office charts from the past weekend.
 ###BOM.daily_chart(limit=10)
-Get movies from top box office charts since the beginning of the week.
+Get movies from top box office charts for today.
 ##class Movie()
 Movie model for Box Office Mojo
 ###attribute Movie.movie_id
@@ -39,6 +39,7 @@ The movie's gross income, represented as an integer
 Get the movie's weekend trend as a list of tuples
 ###Movie.daily_trend()
 Get the movie's daily trend as a list of tuples
+(daily trend may be unavailable)
 
 
 #Unit Tests
