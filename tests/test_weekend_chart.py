@@ -35,7 +35,6 @@ class TestWeekendChart(unittest.TestCase):
         assert type(self.test_movie.studio) == str
         assert type(self.test_movie.gross) == str
         assert "$" in self.test_movie.gross
-
         
 
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_trend.yaml')
