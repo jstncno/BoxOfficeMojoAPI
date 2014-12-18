@@ -22,8 +22,8 @@ class TestWeekendChart(unittest.TestCase):
 
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml')
     def setUp(self):
-        self.bom = BOM()
-        self.movies = self.bom.weekend_chart()
+        self.bom = BOM(WEEKEND_CHART)
+        self.movies = self.bom.chart()
         self.test_movie = self.movies.next() # get the first movie for testing
 
     def test_weekend_chart(self):
