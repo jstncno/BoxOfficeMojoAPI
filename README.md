@@ -6,39 +6,46 @@ Unofficial Python API for [Box Office Mojo](http://boxofficemojo.com/).
 
 #Usage
 ```python
-from bom import BOM
+from bom import BOM, DAILY_CHART
 
-bom = BOM()
+bom = BOM(chart=DAILY_CHART)
 
-for movie in bom.weekend_chart(limit=10):
+for movie in bom.get_chart(limit=10):
     print (movie.rank, movie.title, movie.gross)
 ```
 
 #API
-##class BOM()
-Get list of movies from Box Office Mojo
-###BOM.weekend_chart(limit=10)
+##`class BOM(chart=bom.DAILY_CHART)`
+Get list of movies from Box Office Mojo. Available charts are:
+
+```python
+bom.DAILY_CHART
+bom.WEEKEND_CHART
+bom.WEEKLY_CHART
+```
+
+###`BOM.weekend_chart(limit=10)`
 Get movies from top box office charts from the past weekend.
-###BOM.daily_chart(limit=10)
+###`BOM.daily_chart(limit=10)`
 Get movies from top box office charts for today.
-##class Movie()
+##`class Movie()`
 Movie model for Box Office Mojo
-###attribute Movie.movie_id
+###attribute `Movie.movie_id`
 The movie's ID on Box Office Mojo
-###attribute Movie.rank
+###attribute `Movie.rank`
 The movie's current rank
-###attribute Movie.title
+###attribute `Movie.title`
 The title of the movie
-###attribute Movie.studio
+###attribute `Movie.studio`
 The movie's producing studio
-###attribute Movie.gross
+###attribute `Movie.gross`
 The movie's gross income
 Note: can be either weekend or daily gross, depending on which BOM method you called
-###property Movie.gross_val
+###property `Movie.gross_val`
 The movie's gross income, represented as an integer
-###Movie.weekend_trend()
+###`Movie.weekend_trend()`
 Get the movie's weekend trend as a list of tuples
-###Movie.daily_trend()
+###`Movie.daily_trend()`
 Get the movie's daily trend as a list of tuples
 (daily trend may be unavailable)
 

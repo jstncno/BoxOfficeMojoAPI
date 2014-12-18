@@ -22,8 +22,8 @@ class TestWeekendChart(unittest.TestCase):
 
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/weekend_chart.yaml')
     def setUp(self):
-        self.bom = BOM()
-        self.movies = self.bom.weekend_chart()
+        self.bom = BOM(WEEKEND_CHART)
+        self.movies = self.bom.get_chart()
         self.test_movie = self.movies.next() # get the first movie for testing
 
     def test_weekend_chart(self):
@@ -44,7 +44,7 @@ class TestWeekendChart(unittest.TestCase):
         Tests for the weekend trend of a movie
         """
         for movie in self.movies:
-            trend_data = movie.weekend_trend()
+            trend_data = movie.get_trend(WEEKEND_CHART)
             assert len(trend_data) > 0
             assert type(trend_data) == list
             for data in trend_data:

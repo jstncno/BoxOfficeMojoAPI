@@ -24,6 +24,8 @@ class BOM(object):
     """
     The class that parses the BoxOfficeMojo page, and builds up all the movies
     """
+    def __init__(self, chart=DAILY_CHART):
+        self._chart = chart
 
     def _get_movie_id(self, movie_id_link):
         """
@@ -32,10 +34,10 @@ class BOM(object):
         #return re.sub('\/movies\/\?id\=', '', movie_id_link)
         return movie_id_link.split('id=')[1]
 
-
-    def weekend_chart(self, limit=10):
+    def get_chart(self, limit=10):
         """
-        Yields a list of box office movies from the weekend chart of BoxOfficeMojo
+        Yields a list of box office movies from the chart of BoxOfficeMojo
+        specified by self._chart
 
         'limit' is the max number of movies to return.
         Default is 10, cannot be more than 25.
@@ -45,96 +47,56 @@ class BOM(object):
 
         movies_found = 0
 
-        soup = get_soup(WEEKEND_CHART)
-        table = soup.findChildren('table')[4]
-        movies = table.findChildren('tr')[1:-1]
-        
-        for m in movies:
-            attrs = m.findChildren('td')
-            rank = str(attrs[0].string)
-            title = str(attrs[2].string)
-            movie_id = self._get_movie_id(str(attrs[2].a['href']))
-            studio = str(attrs[3].string)
-            gross = str(attrs[4].string)
+        soup = get_soup(self._chart)
 
-            movie = Movie(movie_id, rank, title, studio, gross)
-            yield movie
-            movies_found += 1
+        if self._chart == DAILY_CHART:
+            movies = soup.findChildren('tr')[16:-2]
 
-            if movies_found >= limit:
-                return
+            s = soup.findChildren('b')
+            mvs = s[13:len(s)-3]
 
-    def daily_chart(self, limit=10):
-        """
-        Yields a list of box office movies from the daily chart of BoxOfficeMojo
+            it = iter(mvs)
 
-        'limit' is the max number of movies to return.
-        Default is 10, cannot be more than 25.
-        """
-        if limit <= 0 or limit > 25:
-            limit = 25
+            mvs = zip(it, it)
 
-        movies_found = 0
+            assert len(mvs) == len(movies)
 
-        soup = get_soup(DAILY_CHART)
-        movies = soup.findChildren('tr')[16:-2]
+            for (i, m) in enumerate(movies):
+                attrs = m.findChildren('td')
+                rank = str(attrs[0].string)
+                movie_id = self._get_movie_id(str(attrs[1].b.a['href']))
+                studio = str(attrs[1].small.a.string)
 
-        s = soup.findChildren('b')
-        mvs = s[13:len(s)-3]
+                title = str(mvs[i][0].next_element.string)
+                gross = str(mvs[i][1].next_element.string)
 
-        it = iter(mvs)
+                movie = Movie(movie_id, rank, title, studio, gross)
+                yield movie
+                movies_found += 1
 
-        mvs = zip(it, it)
+                if movies_found >= limit:
+                    return
 
-        assert len(mvs) == len(movies)
+        elif self._chart == WEEKEND_CHART or self._chart == WEEKLY_CHART:
+            table = soup.findChildren('table')[4]
+            movies = table.findChildren('tr')[1:-1]
+            
+            for m in movies:
+                attrs = m.findChildren('td')
+                rank = str(attrs[0].string)
+                title = str(attrs[2].string)
+                movie_id = self._get_movie_id(str(attrs[2].a['href']))
+                studio = str(attrs[3].string)
+                gross = str(attrs[4].string)
 
-        for (i, m) in enumerate(movies):
-            attrs = m.findChildren('td')
-            rank = str(attrs[0].string)
-            movie_id = self._get_movie_id(str(attrs[1].b.a['href']))
-            studio = str(attrs[1].small.a.string)
+                movie = Movie(movie_id, rank, title, studio, gross)
+                yield movie
+                movies_found += 1
 
-            title = str(mvs[i][0].next_element.string)
-            gross = str(mvs[i][1].next_element.string)
+                if movies_found >= limit:
+                    return
 
-            movie = Movie(movie_id, rank, title, studio, gross)
-            yield movie
-            movies_found += 1
-
-            if movies_found >= limit:
-                return
-
-    def weekly_chart(self, limit=10):
-        """
-        Yields a list of box office movies from the weekend chart of BoxOfficeMojo
-
-        'limit' is the max number of movies to return.
-        Default is 10, cannot be more than 25.
-        """
-        if limit <= 0 or limit > 25:
-            limit = 25
-
-        movies_found = 0
-
-        soup = get_soup(WEEKEND_CHART)
-        table = soup.findChildren('table')[4]
-        movies = table.findChildren('tr')[1:-1]
-        
-        for m in movies:
-            attrs = m.findChildren('td')
-            rank = str(attrs[0].string)
-            title = str(attrs[2].string)
-            movie_id = self._get_movie_id(str(attrs[2].a['href']))
-            studio = str(attrs[3].string)
-            gross = str(attrs[4].string)
-
-            movie = Movie(movie_id, rank, title, studio, gross)
-            yield movie
-            movies_found += 1
-
-            if movies_found >= limit:
-                return
-
+        return
 
 class Movie(object):
     """
@@ -165,95 +127,65 @@ class Movie(object):
         self.gross = gross # movie's gross income (can be either be weekend or daily)
         self.gross_to_date = self._get_domestic_total()
 
-    def weekend_trend(self):
+    def get_trend(self, chart=DAILY_CHART):
         """
-        Returns a list of tuples of the Movie's weekend trend data
+        Returns a list of tuples of the Movie's trend data
+        specified by @chart
         Return value:
         [(week_number, date, rank, weekend_gross),]
         """
-        soup = self._get_movie_soup('weekend')
-        table = soup.findChildren('table')[6]
+        if chart == DAILY_CHART:
+            soup = self._get_movie_soup(page='daily',view='chart')
+            center = soup.findChildren('center')[1]
+            table = center.findChildren('table')[0]
+            rows = table.findChildren('tr')[1:]
 
-        # sometimes the page will have an extra IMDb advertisement
-        # skip to the next table if such element exists
-        if 'imdb' in table.a['href']:
-            table = soup.findChildren('table')[7]
+            day = []
+            rank = []
+            gross = []
+            index = []
+            for row in rows:
+                td = row.findChildren('td')
+                try:
+                    d = str(td[1].string)
+                    r = str(td[2].string)
+                    g = str(td[3].string)
+                    i = str(td[9].string)
+                except:
+                    pass
+                finally:
+                    day.append(d)
+                    rank.append(r)
+                    gross.append(g)
+                    index.append(i)
 
-        rows = table.findChildren('tr')[1:]
-        
-        weekend = []
-        rank = []
-        gross = []
-        index = []
-        for row in rows:
-            td = row.findChildren('td')
-            weekend.append(td[0].string.encode('raw_unicode_escape').replace('\x96', '-'))
-            rank.append(str(td[1].string))
-            gross.append(str(td[2].string))
-            index.append(str(td[8].string))
+            return zip(index, day, rank, gross)
 
-        return zip(index, weekend, rank, gross)
+        elif chart == WEEKEND_CHART or chart == WEEKLY_CHART:
+            soup = self._get_movie_soup('weekend')
+            table = soup.findChildren('table')[6]
 
-    def daily_trend(self):
-        """
-        Returns a list of tuples of the Movie's daily trend data
-        Return value:
-        [(day_number, day, rank, gross),]
-        """
-        soup = self._get_movie_soup(page='daily',view='chart')
-        center = soup.findChildren('center')[1]
-        table = center.findChildren('table')[0]
-        rows = table.findChildren('tr')[1:]
+            # sometimes the page will have an extra IMDb advertisement
+            # skip to the next table if such element exists
+            if 'imdb' in table.a['href']:
+                table = soup.findChildren('table')[7]
 
-        day = []
-        rank = []
-        gross = []
-        index = []
-        for row in rows:
-            td = row.findChildren('td')
-            try:
-                d = str(td[1].string)
-                r = str(td[2].string)
-                g = str(td[3].string)
-                i = str(td[9].string)
-            except:
-                pass
-            finally:
-                day.append(d)
-                rank.append(r)
-                gross.append(g)
-                index.append(i)
+            rows = table.findChildren('tr')[1:]
+            
+            weekend = []
+            rank = []
+            gross = []
+            index = []
+            for row in rows:
+                td = row.findChildren('td')
+                weekend.append(td[0].string.encode('raw_unicode_escape').replace('\x96', '-'))
+                rank.append(str(td[1].string))
+                gross.append(str(td[2].string))
+                index.append(str(td[8].string))
 
-        return zip(index, day, rank, gross)
+            return zip(index, weekend, rank, gross)
 
-    def weekly_trend(self):
-        """
-        Returns a list of tuples of the Movie's weekend trend data
-        Return value:
-        [(week_number, date, rank, weekend_gross),]
-        """
-        soup = self._get_movie_soup('weekly')
-        table = soup.findChildren('table')[6]
-
-        # sometimes the page will have an extra IMDb advertisement
-        # skip to the next table if such element exists
-        if 'imdb' in table.a['href']:
-            table = soup.findChildren('table')[7]
-
-        rows = table.findChildren('tr')[1:]
-        
-        weekend = []
-        rank = []
-        gross = []
-        index = []
-        for row in rows:
-            td = row.findChildren('td')
-            weekend.append(td[0].string.encode('raw_unicode_escape').replace('\x96', '-'))
-            rank.append(str(td[1].string))
-            gross.append(str(td[2].string))
-            index.append(str(td[8].string))
-
-        return zip(index, weekend, rank, gross)
+        return []
 
     @property
     def gross_val(self):

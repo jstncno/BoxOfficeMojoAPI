@@ -22,7 +22,7 @@ class TestDailyChart(unittest.TestCase):
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_chart.yaml')
     def setUp(self):
         self.bom = BOM()
-        self.movies = self.bom.daily_chart()
+        self.movies = self.bom.get_chart()
         self.test_movie = self.movies.next() # get the first movie for testing
 
     def test_daily_chart(self):
@@ -47,7 +47,7 @@ class TestDailyChart(unittest.TestCase):
         Tests for the daily trend of a movie
         """
         for movie in self.movies:
-            trend_data = movie.daily_trend()
+            trend_data = movie.get_trend()
             assert len(trend_data) > 0
             assert type(trend_data) == list
             for data in trend_data:
