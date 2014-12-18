@@ -13,7 +13,7 @@ import urllib2
 import re
 #import requests
 from bs4 import BeautifulSoup
-from .constants import BASE_URL, WEEKEND_CHART, DAILY_CHART
+from .constants import BASE_URL, WEEKEND_CHART, DAILY_CHART, WEEKLY_CHART
 
 def get_soup(page=WEEKEND_CHART):
     #content = requests.get('%s/%s/' % (BASE_URL, page))
@@ -103,6 +103,9 @@ class BOM(object):
 
             if movies_found >= limit:
                 return
+
+    def weekly_chart(self, limit=10):
+        pass
 
 
 class Movie(object):
