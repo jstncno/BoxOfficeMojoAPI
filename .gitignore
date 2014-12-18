@@ -8,3 +8,4 @@ tests/fixtures/
 .DS_Store
 deletecassettes.sh
 .Python
+dist/
