@@ -22,7 +22,7 @@ class TestDailyChart(unittest.TestCase):
     @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/daily_chart.yaml')
     def setUp(self):
         self.bom = BOM()
-        self.movies = self.bom.chart()
+        self.movies = self.bom.get_chart()
         self.test_movie = self.movies.next() # get the first movie for testing
 
     def test_daily_chart(self):

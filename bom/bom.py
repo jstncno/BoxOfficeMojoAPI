@@ -34,7 +34,7 @@ class BOM(object):
         #return re.sub('\/movies\/\?id\=', '', movie_id_link)
         return movie_id_link.split('id=')[1]
 
-    def chart(self, limit=10):
+    def get_chart(self, limit=10):
         """
         Yields a list of box office movies from the weekend chart of BoxOfficeMojo
 
