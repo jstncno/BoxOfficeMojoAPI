@@ -26,6 +26,7 @@ class TestBOM(unittest.TestCase):
         self.movies = self.bom.get_chart()
 
     def test_bom(self):
+        print self.bom.date
         assert type(self.bom.date) == str
 
 

@@ -107,9 +107,9 @@ class BOM(object):
     @property
     def date(self):
         if self._chart != DAILY_CHART:
-            return str(datetime.datetime.today().strftime('%B %d, %Y'))
-        else:
             return str(self._date)
+        else:
+            return str(datetime.datetime.today().strftime('%B %d, %Y'))
 
 class Movie(object):
     """

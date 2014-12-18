@@ -4,7 +4,9 @@ bom/__init__.py
 bom/bom.py
 bom/constants.py
 tests/__init__.py
+tests/test_bom.py
 tests/test_daily_chart.py
 tests/test_movie.py
 tests/test_utils.py
 tests/test_weekend_chart.py
+tests/test_weekly_chart.py
