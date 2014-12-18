@@ -24,6 +24,8 @@ bom.WEEKEND_CHART
 bom.WEEKLY_CHART
 ```
 
+###attribute `BOM.date`
+The chart date, represented as a datetime object
 ###`BOM.weekend_chart(limit=10)`
 Get movies from top box office charts from the past weekend.
 ###`BOM.daily_chart(limit=10)`

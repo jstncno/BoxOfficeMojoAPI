@@ -11,7 +11,8 @@ License: MIT
 import urllib
 import urllib2
 import re
-#import requests
+import datetime
+
 from bs4 import BeautifulSoup
 from .constants import BASE_URL, WEEKEND_CHART, DAILY_CHART, WEEKLY_CHART
 
@@ -26,6 +27,13 @@ class BOM(object):
     """
     def __init__(self, chart=DAILY_CHART):
         self._chart = chart
+        self.soup = get_soup(self._chart)
+        if chart == WEEKLY_CHART:
+            self._date = self.soup.findChildren('h2')[1].string
+        elif chart == WEEKEND_CHART:
+            self._date = self.soup.findChildren('b')[1].string
+        else:
+            self._date = self.soup.findChildren('b')[12].br.string
 
     def _get_movie_id(self, movie_id_link):
         """
@@ -47,12 +55,10 @@ class BOM(object):
 
         movies_found = 0
 
-        soup = get_soup(self._chart)
-
         if self._chart == DAILY_CHART:
-            movies = soup.findChildren('tr')[16:-2]
+            movies = self.soup.findChildren('tr')[16:-2]
 
-            s = soup.findChildren('b')
+            s = self.soup.findChildren('b')
             mvs = s[13:len(s)-3]
 
             it = iter(mvs)
@@ -78,7 +84,7 @@ class BOM(object):
                     return
 
         elif self._chart == WEEKEND_CHART or self._chart == WEEKLY_CHART:
-            table = soup.findChildren('table')[4]
+            table = self.soup.findChildren('table')[4]
             movies = table.findChildren('tr')[1:-1]
             
             for m in movies:
@@ -97,6 +103,10 @@ class BOM(object):
                     return
 
         return
+
+    @property
+    def date(self):
+        pass
 
 class Movie(object):
     """
