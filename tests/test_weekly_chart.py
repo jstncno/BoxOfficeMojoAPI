@@ -42,7 +42,7 @@ class TestWeeklyChart(unittest.TestCase):
         Tests for the weekend trend of a movie
         """
         for movie in self.movies:
-            trend_data = movie.weekend_trend()
+            trend_data = movie.get_trend(WEEKLY_CHART)
             assert len(trend_data) > 0
             assert type(trend_data) == list
             for data in trend_data:

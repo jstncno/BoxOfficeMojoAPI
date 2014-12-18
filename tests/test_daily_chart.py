@@ -47,7 +47,7 @@ class TestDailyChart(unittest.TestCase):
         Tests for the daily trend of a movie
         """
         for movie in self.movies:
-            trend_data = movie.daily_trend()
+            trend_data = movie.get_trend()
             assert len(trend_data) > 0
             assert type(trend_data) == list
             for data in trend_data:
