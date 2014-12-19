@@ -147,12 +147,20 @@ class Movie(object):
 
 
     def __init__(self, movie_id, rank, title, studio, gross):
-        self.movie_id = movie_id # the movie's ID on BoxOfficeMojo.com
-        self.rank = rank # this week's rank
-        self.title = title # the title of the movie
-        self.studio = studio # the movie's producing studio
-        self.gross = gross # movie's gross income (can be either be weekend or daily)
+        # the movie's ID on BoxOfficeMojo.com
+        self.movie_id = movie_id
+        # this week's rank
+        self.rank = rank
+        # the title of the movie
+        self.title = title
+        # the movie's producing studio
+        self.studio = studio
+        # movie's gross income (can be either be weekend or daily)
+        self.gross = gross
+        # movie's total domestic gross income to date
         self.gross_to_date = self._get_domestic_total()
+        # url to movie page on Box Office Movie
+        self.url = BASE_URL + '/movies/?id=' + self.movie_id
 
     def get_trend(self, chart=DAILY_CHART):
         """

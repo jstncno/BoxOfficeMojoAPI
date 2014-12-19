@@ -20,13 +20,14 @@ from test_utils import FIXTURES_DIR
 
 class TestMovie(unittest.TestCase):
 
-    @vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/movie.yaml')
+    #@vcr.use_cassette(FIXTURES_DIR + '/vcr_cassettes/movie.yaml')
     def setUp(self):
         self.bom = BOM()
         self.movies = self.bom.get_chart()
         self.test_movie = self.movies.next() # get the first movie for testing
 
     def test_movie(self):
+        assert(urllib2.urlopen(self.test_movie.url))
         assert type(self.test_movie.gross_val) == int
 
 
