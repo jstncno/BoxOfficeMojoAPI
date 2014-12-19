@@ -40,6 +40,8 @@ The movie's current rank
 The title of the movie
 ###attribute `Movie.studio`
 The movie's producing studio
+###attribute `Movie.url`
+The movie's URL on Box Office Movie
 ###attribute `Movie.gross`
 The movie's gross income
 Note: can be either weekend or daily gross, depending on which BOM method you called
