@@ -61,8 +61,12 @@ class BOM(object):
             s = self.soup.findChildren('b')
             mvs = s[13:len(s)-3]
 
-            it = iter(mvs)
+            # if today's charts are not yet available...
+            # shift our collection up one
+            if "$" not in mvs[0]:
+                mvs = s[14:len(s)-3]
 
+            it = iter(mvs)
             mvs = zip(it, it)
 
             assert len(mvs) == len(movies)
@@ -109,7 +113,17 @@ class BOM(object):
         if self._chart != DAILY_CHART:
             return str(self._date)
         else:
-            return str(datetime.datetime.today().strftime('%B %d, %Y'))
+            today = datetime.datetime.today()
+            year = today.strftime("%Y")
+            date_str = "%s/%s" % (self._date, year)
+            date = datetime.datetime.strptime(date_str, "%m/%d/%Y")
+
+            if today < date:
+                year = (today - datetime.timedelta(years=1)).strftime("%Y")
+                date_str = "%s/%s" % (self._date, year)
+                date = datetime.datetime.strptime(date_str, "%m/%d/%Y")
+
+            return date.strftime('%B %d, %Y')
 
 class Movie(object):
     """
