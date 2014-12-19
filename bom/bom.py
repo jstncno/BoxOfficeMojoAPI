@@ -31,7 +31,7 @@ class BOM(object):
         if chart == WEEKLY_CHART:
             self._date = self.soup.findChildren('h2')[1].string
         elif chart == WEEKEND_CHART:
-            self._date = self.soup.findChildren('b')[1].string
+            self._date = self.soup.findChildren('b')[2].string
         else:
             self._date = self.soup.findChildren('b')[12].br.string
 
