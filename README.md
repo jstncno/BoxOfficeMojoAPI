@@ -4,6 +4,8 @@ BoxOfficeMojoAPI
 
 Unofficial Python API for [Box Office Mojo](http://boxofficemojo.com/).
 
+**NOTE**: This library and its author are *not* endorsed by or affiliated with [BoxOfficeMojo.com](http://boxofficemojo.com/).
+
 #Usage
 ```python
 from bom import BOM, DAILY_CHART

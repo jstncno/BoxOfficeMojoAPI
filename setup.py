@@ -14,10 +14,12 @@ setup(
 	license='MIT License',
 	description='Unofficial Python API for Box Office Mojo.',
 	long_description='''\
-Unofficial Python API for Box Office Mojo
-http://boxofficemojo.com/
----------------------------------------------
-Usage: https://github.com/hyperbit/BoxOfficeMojoAPI
+Unofficial Python API for Box Office Mojo\n
+http://boxofficemojo.com/\n
+NOTE: This library and its author are not endorsed
+by or affiliated with http://boxofficemojo.com/.\n
+---------------------------------------------\n
+Usage: https://github.com/hyperbit/BoxOfficeMojoAPI\n
 ''',
 	classifiers=[
         'Development Status :: 2 - Pre-Alpha',
