@@ -114,12 +114,12 @@ class BOM(object):
             return str(self._date)
         else:
             today = datetime.datetime.today()
-            year = today.strftime("%Y")
+            year = today.year
             date_str = "%s/%s" % (self._date, year)
             date = datetime.datetime.strptime(date_str, "%m/%d/%Y")
 
             if today < date:
-                year = (today - datetime.timedelta(years=1)).strftime("%Y")
+                year = today.year - 1
                 date_str = "%s/%s" % (self._date, year)
                 date = datetime.datetime.strptime(date_str, "%m/%d/%Y")
 
