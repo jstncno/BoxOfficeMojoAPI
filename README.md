@@ -1,5 +1,9 @@
 BoxOfficeMojoAPI
 ================
+
+#DEPRECATED
+Reason: [Box Office Mojo](http://boxofficemojo.com/)'s site format changes daily, causing inconsistent data scraping from this API.
+
 ![Build Status](https://travis-ci.org/hyperbit/BoxOfficeMojoAPI.svg?branch=master)
 
 Unofficial Python API for [Box Office Mojo](http://boxofficemojo.com/).
