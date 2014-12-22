@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-version = '0.0.9'
+version = 'DEPRECATED'
 
 setup(
 	name='BoxOfficeMojo',
@@ -14,6 +14,9 @@ setup(
 	license='MIT License',
 	description='Unofficial Python API for Box Office Mojo.',
 	long_description='''\
+DEPRECATED\n
+Reason: Box Office Mojo's site format changes daily,
+causing inconsistent data scraping from this API.\n
 Unofficial Python API for Box Office Mojo\n
 http://boxofficemojo.com/\n
 NOTE: This library and its author are not endorsed
